@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+	
+        <script src="http://www.parsecdn.com/js/parse-1.3.1.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>    	
+    	<div class="parallax-background">
+	  		<ul id="home-scene" class="scene unselectable"
+				data-friction-x="0.1"
+				data-friction-y="0.1"
+				data-scalar-x="5"
+				data-scalar-y="5">
+			</ul>
+		</div>
+    	
+		<div class="content">
+			<div class="text-center">
+		
+			</div>
+			<h1 class="text-center">Gravity</h1>
+			<p class="text-center" id="user-name"></p>
+			<ul class="list-links">
+		
+			</ul>
+			<br>
+			
+			<div class="app_store">
+				<a href="https://itunes.apple.com/us/app/gravity-fastest-way-to-share/id944825112?ls=1&mt=8">
+					<img src="app_store.png">
+				</a>
+			</div class="app_store">
+			
+			</br>
+			If your login keeps being sent out of the planet, just make sure that it's switched to ON in your settings on iOS!
+							
+			</div>
+		</div>
+
+		<script>
+			Parse.initialize("IsR5j8DO5xsFpxB2mCk3yVJ4TrQIz9MZlqVvuPbJ", "3i86Rny9S8YaUUgwYimCrXIymj0lJMQGxEtAGSkt");
+			var url = document.URL;
+			var urlInfo = url.substring(url.indexOf('?') + 1, url.length);
+			Parse.Cloud.run('retrieveSiteInfo', {"siteID": urlInfo}, {
+				success: function(result) {
+					console.log(result);
+					$("#user-name").append(result.get("Name"));
+					if (result.get("Facebook") != undefined) {
+						$(".list-links").append('<li><a href="https://facebook.com/' + result.get("Facebook") + '"><img src="facebook.png"></a></li>');
+					}
+					if (result.get("Twitter") != undefined) {
+						$(".list-links").append('<li><a href="https://twitter.com/' + result.get("Twitter") + '"><img src="twitter.png"></a></li>');
+					}     
+					if (result.get("Phone") != undefined) {
+						$(".list-links").append('<li><a href="tel://' + result.get("Phone") + '"><img src="phone.png"></a></li>');
+					}          
+					if (result.get("Email") != undefined) {
+						$(".list-links").append('<li><a href="mailto:' + result.get("Email") + '"><img src="email.png"></a></li>');
+					}
+			  	},
+			  	error: function(error) {
+			  
+			  	}
+			});
+		</script>
+		
+		<script src="js/parallax.min.js"></script>
+		<script src="js/stars.js"></script>
+		
+		<script>
+			var homeScene = document.getElementById('home-scene');
+			var homeParallax = new Parallax(homeScene);
+		</script>
+	</body>
+</html>
+		
