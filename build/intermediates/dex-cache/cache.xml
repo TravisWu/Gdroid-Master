@@ -2,81 +2,81 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\jniLib\twilioclient-android.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="5377c4a79117282a6c7b6a507057897859e144ce">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\twilioclient-android-bb10d9dc773bd1b0b6a56bd39626b541be961ec5.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\jniLibs\zbar.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="0a7b88ba1496a0b4af76069ad40dacd3897149e0">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\zbar-a5c6511e70acec2c0092c9b1f3f5b41ac57fd3e1.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\gradle-wrapper.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="0d7b175883ea576543d3dbfee42894b103cf35c1">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\gradle-wrapper-643a1e1c933e6b50362d4a564d0c15e4bf6413c6.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\AppData\Local\Android\sdk1\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-0d112d80e04a6a72a9da5ee4f13d3ae6121e1052.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\classes-994d323020e4feb0524541a16babd560ed6e6d63.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-a1343a83f2f5731d8f96b1d606afcc5141826d2d.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\jniLib\Parse-1.9.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\Parse-1.9.1-aa2ec929ac99bbd3385682f488f5a7a687118cce.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\jniLib\ParseFacebookUtilsV4-1.9.1.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\ParseFacebookUtilsV4-1.9.1-5b9839de008b40a4a8678c37f238bc3456087e05.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-android\1.1.4\129874135e6081269ace2312092031558865de12\bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\bolts-android-1.1.4-aa7129c3c858f6afe41eb35badb359836201702b.jar" />
-    </item>
-    <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.0.0\classes.jar"
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="0f254ec13d6671680482d2218f01ecf14dfa93e6">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\classes-48b22604dc946a537bcd30df390c07e16949cd81.jar" />
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/classes-a925eee9227f76ef23bf2c71b4d356167d935fb3.jar" />
     </item>
     <item
-        jar="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\src\main\jniLib\core-3.2.0.jar"
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/jniLibs/zbar.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0a7b88ba1496a0b4af76069ad40dacd3897149e0">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/zbar-b01590b3bc4f835784251e470431fc43cc4ace42.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/gradle-wrapper.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="0d7b175883ea576543d3dbfee42894b103cf35c1">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/gradle-wrapper-1ced55cd96fa7666aa7c1e6b5444f2d860a2d73f.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-0e1763565cee64ab19a46f564b4cbcc5d1b956fb.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/jniLib/twilioclient-android.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="5377c4a79117282a6c7b6a507057897859e144ce">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/twilioclient-android-1f45d644b3228769de3531db5ea82f921d50c72e.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-6d50433d347514782adb4a45f9f9bed6a608f3be.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/jniLib/Parse-1.9.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1b065010f3c9d441ede9078aca8eabcd1c81e647">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/Parse-1.9.1-7017772cbc7b64bdb626d7db5a92216d96bc622d.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/classes-5e2c6ebd3e51808bc0ed46c64c02b2caa68dd531.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-2c32a2f44e2c18198eda59d173011cafba0ec13e.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/jniLib/ParseFacebookUtilsV4-1.9.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="f78e5603a5ecac14eaa34a763c9165444a681193">
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.1-eda3d6072d8ae8beb4df8199a0c6307f42ca6f2a.jar" />
+    </item>
+    <item
+        jar="/Users/traviswu/Desktop/Gdroid-Master1/app/src/main/jniLib/core-3.2.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="e019d15a13a9786f881141d2df6654b8510bce8b">
-        <dex dex="C:\Users\sylve_000\Documents\GitHub\Gdroid-Master\app\build\intermediates\pre-dexed\debug\core-3.2.0-bef73f033c4e68273deceade4300c75682ff45c4.jar" />
+        <dex dex="/Users/traviswu/Desktop/Gdroid-Master1/app/build/intermediates/pre-dexed/debug/core-3.2.0-2e86b0cb6f17893f8743902fab91425ff2660e7b.jar" />
     </item>
 
 </items>
