@@ -49,6 +49,7 @@ public class main extends Activity {
                     public void onClick(View v){
 
                         startActivity(new Intent(main.this, QRScan.class));
+                        overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
                         //Read QR Code
                         //scanQR(v);
 
