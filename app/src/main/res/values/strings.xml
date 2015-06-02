@@ -9,5 +9,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="continue_label">Click below to load the URL!!</string>
+    <string name="web_button">Load the URL!!</string>
+    <string name="decode_label">Decoded URL</string>
+
 
 </resources>

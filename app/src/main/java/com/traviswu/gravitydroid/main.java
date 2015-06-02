@@ -16,12 +16,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 
 public class main extends Activity {
 
@@ -33,6 +31,8 @@ public class main extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        HandleClick hc = new HandleClick();
+        findViewById(R.id.buttonPlanet).setOnClickListener(hc);
 
         findViewById(R.id.buttonFb).setOnTouchListener(OnTouch);
         findViewById(R.id.buttonCall).setOnTouchListener(OnTouch);
@@ -43,37 +43,39 @@ public class main extends Activity {
         //Button buttonGen = (Button) findViewById(R.id.qrCode);
         //buttonGen.setOnClickListener(startActivities(new Intent););
 
-        Button buttonPlanet = (Button) findViewById(R.id.buttonPlanet);
-        buttonPlanet.setOnClickListener(
-                new Button.OnClickListener(){
-                    public void onClick(View v){
+//        Button buttonPlanet = (Button) findViewById(R.id.buttonPlanet);
+//        buttonPlanet.setOnClickListener(
+//                new Button.OnClickListener(){
+//                    public void onClick(View v){
 
-                        startActivity(new Intent(main.this, QRScan.class));
-                        overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
+//                        startActivity(new Intent(main.this, QRScan.class));
+//                        overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
                         //Read QR Code
                         //scanQR(v);
 
 
 
                         //Generate QR Code
-                        /*
-                        ImageView imageView = (ImageView) findViewById(R.id.qrCode);
 
-                        String qrData = "Data I want to encode in QR code";
-                        int qrCodeDimention = 500;
-
-                        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null,
-                                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
-
-                        try {
-                            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-                            imageView.setImageBitmap(bitmap);
-                        } catch (WriterException e) {
-                            e.printStackTrace();
-                        }*/
-                    }
-                }
-        );
+//                        Button qrCode = (Button) findViewById(R.id.qrCode);
+//                        qrCode.setOnClickListener(this);
+//
+//
+//                        String qrData = "Data I want to encode in QR code";
+//                        int qrCodeDimention = 500;
+//
+//                        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null,
+//                                Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+//
+//                        try {
+//                            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
+//                            imageView.setImageBitmap(bitmap);
+//                        } catch (WriterException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//        );
     ImageButton buttonMessage = (ImageButton)findViewById(R.id.twilio);
         buttonMessage.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
@@ -128,21 +130,6 @@ public class main extends Activity {
 //        scanIntegrator.initiateScan();
 //    }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanningResult != null) {
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    scanContent, Toast.LENGTH_SHORT);
-            toast.show();
-        }
-        else{
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -305,4 +292,29 @@ private PointF touchDown;
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
+    private class HandleClick implements View.OnClickListener {
+        public void onClick(View arg0) {
+            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);    //Barcode Scanner to scan for us
+        }
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null) {
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    scanContent, Toast.LENGTH_SHORT);
+            toast.show();
+        }
+        else{
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+
 }
+
