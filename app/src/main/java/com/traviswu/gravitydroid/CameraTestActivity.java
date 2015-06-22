@@ -3,9 +3,6 @@ package com.traviswu.gravitydroid;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
-import android.hardware.Camera.AutoFocusCallback;
-import android.hardware.Camera.PreviewCallback;
-import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Button;
@@ -17,10 +14,11 @@ import net.sourceforge.zbar.Image;
 import net.sourceforge.zbar.ImageScanner;
 import net.sourceforge.zbar.Symbol;
 import net.sourceforge.zbar.SymbolSet;
+
 /**
- * Created by traviswu on 2015-03-02.
+ * Created by traviswu on 2015-06-16.
  */
-public class QRScan extends Activity {
+public class CameraTestActivity extends Activity {
     private Camera mCamera;
     private CameraPreview mPreview;
     private Handler autoFocusHandler;
@@ -56,7 +54,28 @@ public class QRScan extends Activity {
         FrameLayout preview = (FrameLayout)findViewById(R.id.cameraPreview);
         preview.addView(mPreview);
 
+        scanText = (TextView)findViewById(R.id.scanText);
+//
+//        scanButton = (Button)findViewById(R.id.ScanButton);
+    if (barcodeScanned) {
+        barcodeScanned = false;
+        mCamera.setPreviewCallback(previewCb);
+        mCamera.startPreview();
+        previewing = true;
+        mCamera.autoFocus(autoFocusCB);}
 
+//        scanButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                if (barcodeScanned) {
+//                    barcodeScanned = false;
+//                    scanText.setText("Scanning...");
+//                    mCamera.setPreviewCallback(previewCb);
+//                    mCamera.startPreview();
+//                    previewing = true;
+//                    mCamera.autoFocus(autoFocusCB);
+//                }
+//            }
+//        });
     }
 
     public void onPause() {
@@ -90,10 +109,10 @@ public class QRScan extends Activity {
         }
     };
 
-    PreviewCallback previewCb = new PreviewCallback() {
+    Camera.PreviewCallback previewCb = new Camera.PreviewCallback() {
         public void onPreviewFrame(byte[] data, Camera camera) {
             Camera.Parameters parameters = camera.getParameters();
-            Size size = parameters.getPreviewSize();
+            Camera.Size size = parameters.getPreviewSize();
 
             Image barcode = new Image(size.width, size.height, "Y800");
             barcode.setData(data);
@@ -115,7 +134,7 @@ public class QRScan extends Activity {
     };
 
     // Mimic continuous auto-focusing
-    AutoFocusCallback autoFocusCB = new AutoFocusCallback() {
+    Camera.AutoFocusCallback autoFocusCB = new Camera.AutoFocusCallback() {
         public void onAutoFocus(boolean success, Camera camera) {
             autoFocusHandler.postDelayed(doAutoFocus, 1000);
         }

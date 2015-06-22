@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,8 +32,7 @@ public class main extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        HandleClick hc = new HandleClick();
-        findViewById(R.id.buttonPlanet).setOnClickListener(hc);
+
 
         findViewById(R.id.buttonFb).setOnTouchListener(OnTouch);
         findViewById(R.id.buttonCall).setOnTouchListener(OnTouch);
@@ -40,18 +40,19 @@ public class main extends Activity {
         findViewById(R.id.buttonTwitter).setOnTouchListener(OnTouch);
         findViewById(R.id.buttonPlanet).setOnDragListener(dragListener);
 
-        //Button buttonGen = (Button) findViewById(R.id.qrCode);
-        //buttonGen.setOnClickListener(startActivities(new Intent););
 
-//        Button buttonPlanet = (Button) findViewById(R.id.buttonPlanet);
-//        buttonPlanet.setOnClickListener(
-//                new Button.OnClickListener(){
-//                    public void onClick(View v){
 
-//                        startActivity(new Intent(main.this, QRScan.class));
-//                        overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
-                        //Read QR Code
-                        //scanQR(v);
+
+
+        Button buttonPlanet = (Button) findViewById(R.id.buttonPlanet);
+        buttonPlanet.setOnClickListener(
+                new Button.OnClickListener(){
+                    public void onClick(View v){
+                        startActivity(new Intent(main.this, CameraTestActivity.class));
+                        overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
+                    }
+                }
+        );
 
 
 
@@ -115,20 +116,6 @@ public class main extends Activity {
         });
     }
 
-//
-//    public void textSender(String phoneNumber){
-//        try {
-//            SmsSender.send(phoneNumber);
-//        } catch (TwilioRestException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//    }
-//    public void scanQR(View v){
-//        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-//        scanIntegrator.initiateScan();
-//    }
 
 
     @Override
@@ -292,13 +279,7 @@ private PointF touchDown;
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
-    private class HandleClick implements View.OnClickListener {
-        public void onClick(View arg0) {
-            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-            startActivityForResult(intent, 0);    //Barcode Scanner to scan for us
-        }
-    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {

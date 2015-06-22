@@ -33,6 +33,7 @@ public class HelloMonkeyActivity extends Activity implements View.OnClickListene
     {
 
         if (view.getId() == R.id.Sbutton) {
+
             phone.connect(numberField.getText().toString());
             //phone.disconnect();
 
