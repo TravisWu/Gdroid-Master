@@ -1,86 +1,98 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_converted"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".main"
-    android:id="@+id/background"
-    android:background="@drawable/background_converted">
+    tools:context=".main">
 
 
     <Button
+        android:id="@+id/buttonPlanet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/buttonPlanet"
-        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/planet_converted" />
 
 
     <ImageButton
+        android:id="@+id/twilio"
         android:layout_width="60dp"
         android:layout_height="45dp"
-        android:id="@+id/twilio"
-        android:layout_gravity="left|top"
-        android:background="@drawable/speech"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/frameLayout" />
+        android:layout_alignRight="@+id/frameLayout"
+        android:layout_gravity="left|top"
+        android:background="@drawable/speech" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <RadioButton
+        android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="New RadioButton" />
+
+    <Button
         android:id="@+id/buttonCall"
-        android:background="@drawable/phone_converted"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/phone_converted" />
+
+    <Button
         android:id="@+id/buttonFb"
-        android:background="@drawable/facebook_converted"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/buttonPlanet" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonPlanet"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/facebook_converted" />
+
+    <Button
         android:id="@+id/buttonTwitter"
-        android:background="@drawable/twitter_converted"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/buttonPlanet" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/buttonPlanet"
+        android:background="@drawable/twitter_converted" />
+
+    <Button
         android:id="@+id/buttonMail"
-        android:background="@drawable/email_converted"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/buttonTwitter"
-        android:layout_alignParentRight="true" />
+        android:background="@drawable/email_converted" />
 
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/frameLayout"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true">
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true">
 
 
         <Button
+            android:id="@+id/qrCode"
             android:layout_width="60dp"
             android:layout_height="52dp"
-            android:id="@+id/qrCode"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@drawable/pathh"
-            android:layout_marginBottom="65dp"/>
+            android:layout_marginBottom="65dp"
+            android:background="@drawable/pathh" />
+
+        <ImageView
+            android:id="@+id/imageQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </RelativeLayout>
