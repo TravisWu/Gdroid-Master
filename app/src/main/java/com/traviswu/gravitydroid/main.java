@@ -170,6 +170,12 @@ public class main extends Activity {
 
 
         Button qrCode = (Button) findViewById(R.id.qrCode);
+
+        /**
+         * Note that this is where you have the prompt number onclick.
+         * Now it has been overwritten by the onTouchListener below
+         * Remember to move it to another button
+         */
         qrCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,19 +201,37 @@ public class main extends Activity {
             }
         });
 
+        /**
+         * This part is where the program tries to handle qrCode.
+         */
+        qrCode.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
-        String qrData = "Data I want to encode in QR code";
-        int qrCodeDimention = 500;
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        String qrData = "Data I want to encode in QR code";
+                        int qrCodeDimention = 500;
+
+                        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
+                        ImageView imageView = (ImageView) findViewById(R.id.imageQRCode);
+                        try {
+                            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
+                            imageView.setImageBitmap(bitmap);
+                        } catch (WriterException e) {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        imageView = (ImageView) findViewById(R.id.imageQRCode);
+                        imageView.setImageDrawable(null);
+                        return true;
+                }
+                return false;
+            }
+        });
 
 
-        QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
-        ImageView imageView = (ImageView) findViewById(R.id.imageQRCode);
-        try {
-            Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
-            imageView.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
 
 
         ImageButton buttonMessage = (ImageButton) findViewById(R.id.twilio);
