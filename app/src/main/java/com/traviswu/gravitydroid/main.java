@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +21,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,121 +32,31 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class main extends Activity {
 
     final Context context = this;
-    View.OnLongClickListener longListen = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            DragShadow dragShadow = new DragShadow(v);
-            ClipData data = ClipData.newPlainText("", "");
-            v.startDrag(data, dragShadow, v, 0);
-            return false;
-        }
-    };
-    View.OnDragListener dragListener = new View.OnDragListener() {
-    @Override
-    public boolean onDrag(View layoutview, DragEvent dragevent) {
-
-        int action = dragevent.getAction();
-        View view = (View) dragevent.getLocalState();
-
-        switch (action) {
-            case DragEvent.ACTION_DRAG_STARTED:
-                break;
-            case DragEvent.ACTION_DRAG_ENTERED:
-                break;
-            case DragEvent.ACTION_DRAG_EXITED:
-                break;
-//            case DragEvent.ACTION_DROP:
-//                ViewGroup owner = (ViewGroup) view.getParent();
-//                owner.removeView(view);
-//                LinearLayout container = (LinearLayout) layoutview;
-//                container.addView(view);
-//                view.setVisibility(View.VISIBLE);
-//                if(container.getId()==R.id.buttonPlanet){
-//                    view.setOnTouchListener(null);
-//                    owner.setOnDragListener(null);
-//                }
-//                break;
-            case DragEvent.ACTION_DROP:
-                ViewGroup owner = (ViewGroup) view.getParent();
-                owner.removeView(view);
-                LinearLayout container = (LinearLayout) layoutview;
-                container.addView(view);
-                view.setVisibility(View.VISIBLE);
-                break;
-            case DragEvent.ACTION_DRAG_ENDED:
-                System.out.println("test");
-                if (dropEventNotHandled(dragevent)) {
-                    view.setVisibility(View.VISIBLE);
-                }
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
-
-        private boolean dropEventNotHandled(DragEvent dragEvent) {
-            return !dragEvent.getResult();
-        }
-    };
-    //    View.OnTouchListener OnTouch = new View.OnTouchListener() {
-//        public boolean onTouch(View view, MotionEvent motionEvent) {
-//            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-//                view.startDrag(null, shadowBuilder, view, 0);
-//                view.setVisibility(View.INVISIBLE);
-//                return true;
-//            } else {
-//                return false;
-//            }
-//
-//        }
-//    };
     private PointF touchDown;
-    View.OnTouchListener OnTouch = new View.OnTouchListener() {
-        public boolean onTouch(View v, MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN: {
-                    touchDown = new PointF(event.getRawX(), event.getRawY());
-                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-                    v.startDrag(null, shadowBuilder, v, 0);
-                    v.setVisibility(View.INVISIBLE);
-                    break;
-                }
-                case MotionEvent.ACTION_MOVE: {
-                    RelativeLayout.LayoutParams par = (RelativeLayout.LayoutParams) v.getLayoutParams();
+    private Button facebookButton;
+    private Button twitterButton;
+    private Button mailButton;
+    private Button callButton;
 
-                    int gridCellSize = 10;
-                    float yDeff = ((event.getRawY() - touchDown.y) / gridCellSize) * gridCellSize;
-                    float xDeff = ((event.getRawX() - touchDown.x) / gridCellSize) * gridCellSize;
+    private boolean facebookOn = false;
+    private boolean twitterOn = false;
+    private boolean mailOn = false;
+    private boolean callOn = false;
 
-                    if (Math.abs(xDeff) >= gridCellSize) {
-                        par.leftMargin += (int) (xDeff / gridCellSize) * gridCellSize;
-                        touchDown.x = event.getRawX() - (xDeff % gridCellSize);
-                    }
+    private String beamString;
 
-                    if (Math.abs(yDeff) >= gridCellSize) {
-                        par.topMargin += (int) (yDeff / gridCellSize) * gridCellSize;
-                        touchDown.y = event.getRawY() - (yDeff % gridCellSize);
-                    }
-
-                    v.setLayoutParams(par);
-                    break;
-                }
-                default: {
-
-                    break;
-                }
-            }
-
-
-            return true;
-        }
-    };
+    //initalize Parse User
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,23 +64,87 @@ public class main extends Activity {
         setContentView(R.layout.activity_main);
 
 
-        findViewById(R.id.buttonFb).setOnTouchListener(OnTouch);
-        findViewById(R.id.buttonCall).setOnTouchListener(OnTouch);
-        findViewById(R.id.buttonMail).setOnTouchListener(OnTouch);
-        findViewById(R.id.buttonTwitter).setOnTouchListener(OnTouch);
-        findViewById(R.id.buttonPlanet).setOnDragListener(dragListener);
+        facebookButton = (Button) findViewById(R.id.buttonFb);
+        twitterButton = (Button) findViewById(R.id.buttonTwitter);
+        mailButton = (Button) findViewById(R.id.buttonMail);
+        callButton = (Button) findViewById(R.id.buttonCall);
 
+        //animation variables
+        final Animation animTranslate;
+        final Animation animTranslateDown;
+        animTranslate = AnimationUtils.loadAnimation(this, R.anim.anim_translate);
+        animTranslateDown = AnimationUtils.loadAnimation(this, R.anim.anim_translate_down);
+
+        //set initial position of the buttons
+        //setButtonPosition();
+        final ArrayList<Button> buttonList = new ArrayList<Button>(){{
+            add(facebookButton);
+            add(twitterButton);
+            add(mailButton);
+            add(callButton);
+        }};
+
+        //animation listener
+        Iterator<Button> iter = buttonList.iterator();
 
         Button buttonPlanet = (Button) findViewById(R.id.buttonPlanet);
         buttonPlanet.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        startActivity(new Intent(main.this, CameraTestActivity.class));
+                        startActivityForResult(new Intent(main.this, CameraTestActivity.class), 1);
                         overridePendingTransition(R.layout.cameraanimation, R.layout.cameraanimation2);
                     }
                 }
         );
 
+        //Facebook button listener
+        //animation listener
+        while (iter.hasNext()){
+            final Button tempButton = iter.next();
+
+            tempButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick (View v){
+                    if (tempButton == facebookButton){
+                        if (facebookOn){
+                            v.startAnimation(animTranslateDown);
+                        }
+                        else if (!facebookOn){
+                            v.startAnimation(animTranslate);
+                        }
+                        facebookOn = !facebookOn;
+                    }
+                    else if (tempButton == twitterButton){
+                        if (twitterOn){
+                            v.startAnimation(animTranslateDown);
+                        }
+                        else if (!twitterOn){
+                            v.startAnimation(animTranslate);
+                        }
+                        twitterOn = !twitterOn;
+                    }
+                    else if(tempButton == mailButton){
+                        if (mailOn){
+                            v.startAnimation(animTranslateDown);
+                        }
+                        else if (!mailOn){
+                            v.startAnimation(animTranslate);
+                        }
+                        mailOn = !mailOn;
+                    }
+                    else if (tempButton == callButton){
+                        if (callOn){
+                            v.startAnimation(animTranslateDown);
+                        }
+                        else if (!callOn){
+                            v.startAnimation(animTranslate);
+                        }
+                        callOn = !callOn;
+                    }
+                    setButtonPosition();
+                }
+            });
+        }
 
         Button qrCode = (Button) findViewById(R.id.qrCode);
 
@@ -231,15 +208,67 @@ public class main extends Activity {
             }
         });
 
-
-
-
         ImageButton buttonMessage = (ImageButton) findViewById(R.id.twilio);
         buttonMessage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 startActivity(new Intent(main.this, HelloMonkeyActivity.class));
             }
         });
+    }
+
+    public void setButtonPosition(){
+        //facebook button positioning
+        if (facebookOn){
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)facebookButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            facebookButton.setLayoutParams(params);
+        }
+        else{
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)facebookButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            facebookButton.setLayoutParams(params);
+        }
+        //twitter button positioning
+        if (twitterOn){
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) twitterButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            twitterButton.setLayoutParams(params);
+        }
+        else{
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)twitterButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            twitterButton.setLayoutParams(params);
+        }
+        //mail button positioning
+        if (mailOn){
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mailButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            mailButton.setLayoutParams(params);
+        }
+        else{
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mailButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            mailButton.setLayoutParams(params);
+        }
+        //call button positioning
+        if (callOn){
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) callButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+            callButton.setLayoutParams(params);
+        }
+        else{
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)callButton.getLayoutParams();
+            params.addRule(RelativeLayout.ALIGN_PARENT_TOP,0);
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            callButton.setLayoutParams(params);
+        }
     }
 
     @Override
@@ -259,7 +288,52 @@ public class main extends Activity {
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
+    /*
+    private void setBeamString(){
+        String temp = "";
+        if (facebookOn){
+            temp = temp + "facebook.";
+        }
+        if (twitterOn){
+            temp = temp + "twitter.";
+        }
+        if (mailOn){
+            temp = temp + "mail.";
+        }
+        if (callOn){
+            temp = temp + "call.";
+        }
+        beamString = temp;
+    }
+    */
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        if (requestCode == 1){
+            if (resultCode == Activity.RESULT_OK){
+                String result = intent.getStringExtra("result");
+                Beam beam = new Beam() ;
+                Log.d("TESTING", "THIS WORKS");
+                //beam.setBeam(facebookOn, twitterOn, mailOn, callOn, currentUser.getObjectId());
+                beam.put("facebook", facebookOn);
+                beam.put("twitter", twitterOn);
+                beam.put("mail", mailOn);
+                beam.put("call", callOn);
+                beam.put("senderId", currentUser.getObjectId());
+                beam.saveInBackground(new SaveCallback(){
+                    public void done(ParseException e){
+                        if (e == null){
+                            Toast toast = Toast.makeText(getApplicationContext(), "Beamed!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else{
+                            Toast toast = Toast.makeText(getApplicationContext(), "failed  !", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
+            }
+        }
+        /*
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
@@ -267,11 +341,12 @@ public class main extends Activity {
             Toast toast = Toast.makeText(getApplicationContext(),
                     scanContent, Toast.LENGTH_SHORT);
             toast.show();
+            //setBeamString();
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
-        }
+        }*/
     }
 
     private class DragShadow extends View.DragShadowBuilder {
@@ -299,7 +374,5 @@ public class main extends Activity {
             greybox.draw(canvas);
         }
     }
-
-
 }
 

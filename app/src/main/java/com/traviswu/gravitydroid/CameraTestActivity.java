@@ -1,6 +1,7 @@
 package com.traviswu.gravitydroid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -128,6 +129,10 @@ public class CameraTestActivity extends Activity {
                 for (Symbol sym : syms) {
                     scanText.setText("barcode result " + sym.getData());
                     barcodeScanned = true;
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("result", sym.getData());
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
                 }
             }
         }
