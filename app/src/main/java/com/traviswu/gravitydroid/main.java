@@ -13,6 +13,7 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
@@ -187,7 +188,7 @@ public class main extends Activity {
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        String qrData = "Data I want to encode in QR code";
+                        String qrData = getPhoneNumber();
                         int qrCodeDimention = 500;
 
                         QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(qrData, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), qrCodeDimention);
@@ -271,6 +272,15 @@ public class main extends Activity {
         }
     }
 
+    private String getPhoneNumber(){
+        TelephonyManager tMgr =(TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+        String mPhoneNumber = tMgr.getLine1Number();
+        if (mPhoneNumber == null){
+            mPhoneNumber = tMgr.getSimSerialNumber();
+        }
+        return mPhoneNumber;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -319,13 +329,12 @@ public class main extends Activity {
                 beam.put("mail", mailOn);
                 beam.put("call", callOn);
                 beam.put("senderId", currentUser.getObjectId());
-                beam.saveInBackground(new SaveCallback(){
-                    public void done(ParseException e){
-                        if (e == null){
+                beam.saveInBackground(new SaveCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
                             Toast toast = Toast.makeText(getApplicationContext(), "Beamed!", Toast.LENGTH_SHORT);
                             toast.show();
-                        }
-                        else{
+                        } else {
                             Toast toast = Toast.makeText(getApplicationContext(), "failed  !", Toast.LENGTH_SHORT);
                             toast.show();
                         }
